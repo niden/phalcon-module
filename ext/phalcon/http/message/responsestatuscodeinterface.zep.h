@@ -1,5 +1,0 @@
-
-extern zend_class_entry *phalcon_http_message_responsestatuscodeinterface_ce;
-
-ZEPHIR_INIT_CLASS(Phalcon_Http_Message_ResponseStatusCodeInterface);
-

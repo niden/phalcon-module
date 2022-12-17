@@ -8,7 +8,7 @@ ENV MY_USER="phalcon" \
 	MY_GROUP="phalcon" \
 	MY_UID="1000" \
 	MY_GID="1000" \
-	PHP_VERSION="8.2" \
+	PHP_VERSION="7.4" \
 	LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
@@ -22,69 +22,25 @@ RUN set -eux && \
 RUN apt update -y && \
     apt install -y \
         apt-utils \
-        gettext \
         git \
-        libgmp-dev \
-        libicu-dev \
-        libmagickwand-dev \
-        libmemcached-dev \
-        libpng-dev \
-        libpq-dev \
-        libyaml-dev \
-        libwebp-dev \
-        libxpm-dev \
         libzip-dev \
         locales \
         nano \
         sudo \
         wget \
-        zip
+        zip \
+        zlib1g
 
 # PECL Packages
-RUN pecl install -o -f redis && \
-    pecl install igbinary \
-      msgpack \
-      apcu \
-      yaml \
-      imagick \
-      memcached \
-      xdebug \
+RUN pecl install xdebug \
       zephir_parser
 
-# Locale
-RUN sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && \
-    sed -i -e 's/# el_GR.UTF-8 UTF-8/el_GR.UTF-8 UTF-8/' /etc/locale.gen && \
-    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-    sed -i -e 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen && \
-    sed -i -e 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen && \
-    dpkg-reconfigure --frontend=noninteractive locales && \
-    update-locale LANG=en_US.UTF-8
-
 # Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype  \
-    --with-jpeg=/usr/include/  \
-    --with-xpm \
-    --with-webp \
-    --enable-gd
-
 RUN docker-php-ext-install \
-        gd \
-        gettext \
-        gmp \
-        intl \
-        pdo_mysql \
-        pdo_pgsql \
         zip
 
 # Install PHP extensions
 RUN docker-php-ext-enable \
-        redis \
-        igbinary \
-        msgpack \
-        apcu \
-        imagick \
-        yaml \
-        memcached \
         xdebug \
         zephir_parser
 
