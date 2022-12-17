@@ -70,20 +70,20 @@ PHP_METHOD(Phalcon_Parsers_Uri, getUri)
 PHP_METHOD(Phalcon_Parsers_Uri, replacePaths)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval paths;
+	zval paths, uri;
 	zval *pattern_param = NULL, *paths_param = NULL, *uri_param = NULL;
-	zval pattern, uri;
+	zval pattern;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&pattern);
-	ZVAL_UNDEF(&uri);
 	ZVAL_UNDEF(&paths);
+	ZVAL_UNDEF(&uri);
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_STR(pattern)
 		Z_PARAM_ARRAY(paths)
-		Z_PARAM_STR(uri)
+		Z_PARAM_ARRAY(uri)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -92,7 +92,7 @@ PHP_METHOD(Phalcon_Parsers_Uri, replacePaths)
 	zephir_fetch_params(1, 3, 0, &pattern_param, &paths_param, &uri_param);
 	zephir_get_strval(&pattern, pattern_param);
 	zephir_get_arrval(&paths, paths_param);
-	zephir_get_strval(&uri, uri_param);
+	zephir_get_arrval(&uri, uri_param);
 
 
 	phalcon_replace_paths(return_value, &pattern, &paths, &uri);

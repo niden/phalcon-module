@@ -29,7 +29,7 @@ class Uri
     public static function replacePaths(
         string pattern,
         array paths,
-        string uri
+        array uri
     ) -> array {
         return phalcon_replace_paths(pattern, paths, uri);
     }
