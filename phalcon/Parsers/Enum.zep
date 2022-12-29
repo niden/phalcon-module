@@ -54,7 +54,7 @@ class Enum
     const PHQL_T_ALL         = 338;
     const PHQL_T_FOR         = 339;
 
-    cial Tokens */
+    /** Special Tokens */
     const PHQL_T_FCALL         = 350;
     const PHQL_T_NLIKE         = 351;
     const PHQL_T_STARALL       = 352;
@@ -74,7 +74,7 @@ class Enum
     const PHQL_T_ISNOTNULL = 366;
     const PHQL_T_MINUS     = 367;
 
-    tgresql Text Search Operators */
+    /** Postgresql Text Search Operators */
     const PHQL_T_TS_MATCHES          = 401;
     const PHQL_T_TS_OR               = 402;
     const PHQL_T_TS_AND              = 403;
