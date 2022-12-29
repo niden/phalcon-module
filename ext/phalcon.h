@@ -9,6 +9,7 @@
 #include "phalcon/mvc/model/exception.zep.h"
 #include "phalcon/mvc/view/engine/volt/exception.zep.h"
 #include "phalcon/parsers/annotations.zep.h"
+#include "phalcon/parsers/enum.zep.h"
 #include "phalcon/parsers/orm.zep.h"
 #include "phalcon/parsers/uri.zep.h"
 #include "phalcon/parsers/volt.zep.h"

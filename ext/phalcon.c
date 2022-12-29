@@ -29,6 +29,7 @@ zend_class_entry *phalcon_annotations_exception_ce;
 zend_class_entry *phalcon_mvc_model_exception_ce;
 zend_class_entry *phalcon_mvc_view_engine_volt_exception_ce;
 zend_class_entry *phalcon_parsers_annotations_ce;
+zend_class_entry *phalcon_parsers_enum_ce;
 zend_class_entry *phalcon_parsers_orm_ce;
 zend_class_entry *phalcon_parsers_uri_ce;
 zend_class_entry *phalcon_parsers_volt_ce;
@@ -70,6 +71,7 @@ static PHP_MINIT_FUNCTION(phalcon)
 	ZEPHIR_INIT(Phalcon_Mvc_Model_Exception);
 	ZEPHIR_INIT(Phalcon_Mvc_View_Engine_Volt_Exception);
 	ZEPHIR_INIT(Phalcon_Parsers_Annotations);
+	ZEPHIR_INIT(Phalcon_Parsers_Enum);
 	ZEPHIR_INIT(Phalcon_Parsers_Orm);
 	ZEPHIR_INIT(Phalcon_Parsers_Uri);
 	ZEPHIR_INIT(Phalcon_Parsers_Volt);
