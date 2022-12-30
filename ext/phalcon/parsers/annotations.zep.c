@@ -35,6 +35,63 @@ ZEPHIR_INIT_CLASS(Phalcon_Parsers_Annotations)
 {
 	ZEPHIR_REGISTER_CLASS(Phalcon\\Parsers, Annotations, phalcon, parsers_annotations, phalcon_parsers_annotations_method_entry, 0);
 
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_EOF"), -1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_ERR"), -2);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_IMPOSSIBLE"), -3);
+
+	/** Modes */
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_MODE_RAW"), 0);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_MODE_ANNOTATION"), 1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_IGNORE"), 297);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOCBLOCK_ANNOTATION"), 299);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ANNOTATION"), 300);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_INTEGER"), 301);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOUBLE"), 302);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_STRING"), 303);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_NULL"), 304);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_FALSE"), 305);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_TRUE"), 306);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_IDENTIFIER"), 307);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ARRAY"), 308);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ARBITRARY_TEXT"), 309);
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_AT"), "@");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOT"), ".");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_COMMA"), ",");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_EQUALS"), "=");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_COLON"), ":");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_BRACKET_OPEN"), "{");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_BRACKET_CLOSE"), "}");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_SBRACKET_OPEN"), "[");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_SBRACKET_CLOSE"), "]");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_PARENTHESES_OPEN"), "(");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_PARENTHESES_CLOSE"), ")");
+
 	return SUCCESS;
 }
 
