@@ -55,11 +55,8 @@ class Annotations
     /**
      * Parse annotations
      */
-    public static function parse(
-        string docBlock,
-        string file,
-        int line
-    ) -> array {
+    public static function parse(string docBlock, file, line) -> array
+    {
         return phannot_parse_annotations(docBlock, file, line);
     }
 }
