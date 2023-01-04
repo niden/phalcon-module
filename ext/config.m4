@@ -13,10 +13,7 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/annotations/exception.zep.c
 	phalcon/mvc/model/exception.zep.c
 	phalcon/mvc/view/engine/volt/exception.zep.c
-	phalcon/parsers/annotations.zep.c
-	phalcon/parsers/orm.zep.c
-	phalcon/parsers/uri.zep.c
-	phalcon/parsers/volt.zep.c phalcon/annotations/scanner.c
+	phalcon/parsers/parser.zep.c phalcon/annotations/scanner.c
 	phalcon/annotations/parser.c
 	phalcon/mvc/model/orm.c
 	phalcon/mvc/model/query/scanner.c
