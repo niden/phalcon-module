@@ -10714,39 +10714,93 @@ ZEPHIR_INIT_CLASS(Phalcon_Parsers_Annotations)
 {
 	ZEPHIR_REGISTER_CLASS(Phalcon\\Parsers, Annotations, phalcon, parsers_annotations, phalcon_parsers_annotations_method_entry, 0);
 
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_EOF"), -1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_ERR"), -2);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_IMPOSSIBLE"), -3);
+
+	/** Modes */
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_MODE_RAW"), 0);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_MODE_ANNOTATION"), 1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_IGNORE"), 297);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOCBLOCK_ANNOTATION"), 299);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ANNOTATION"), 300);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_INTEGER"), 301);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOUBLE"), 302);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_STRING"), 303);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_NULL"), 304);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_FALSE"), 305);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_TRUE"), 306);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_IDENTIFIER"), 307);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ARRAY"), 308);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ARBITRARY_TEXT"), 309);
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_AT"), "@");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOT"), ".");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_COMMA"), ",");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_EQUALS"), "=");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_COLON"), ":");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_BRACKET_OPEN"), "{");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_BRACKET_CLOSE"), "}");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_SBRACKET_OPEN"), "[");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_SBRACKET_CLOSE"), "]");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_PARENTHESES_OPEN"), "(");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_PARENTHESES_CLOSE"), ")");
+
 	return SUCCESS;
 }
 
 static PHP_METHOD(Phalcon_Parsers_Annotations, parse)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zend_long line, ZEPHIR_LAST_CALL_STATUS;
-	zval *docBlock_param = NULL, *file_param = NULL, *line_param = NULL, _0;
-	zval docBlock, file;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *docBlock_param = NULL, *file, file_sub, *line, line_sub;
+	zval docBlock;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&docBlock);
-	ZVAL_UNDEF(&file);
-	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&file_sub);
+	ZVAL_UNDEF(&line_sub);
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_STR(docBlock)
-		Z_PARAM_STR(file)
-		Z_PARAM_LONG(line)
+		Z_PARAM_ZVAL(file)
+		Z_PARAM_ZVAL(line)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 3, 0, &docBlock_param, &file_param, &line_param);
+	zephir_fetch_params(1, 3, 0, &docBlock_param, &file, &line);
 	zephir_get_strval(&docBlock, docBlock_param);
-	zephir_get_strval(&file, file_param);
-	line = zephir_get_intval(line_param);
 
 
-	ZVAL_LONG(&_0, line);
-	ZEPHIR_LAST_CALL_STATUS = phannot_parse_annotations(return_value, &docBlock, &file, &_0);
+	ZEPHIR_LAST_CALL_STATUS = phannot_parse_annotations(return_value, &docBlock, file, line);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -10927,6 +10981,151 @@ ZEPHIR_INIT_CLASS(Phalcon_Parsers_Orm)
 {
 	ZEPHIR_REGISTER_CLASS(Phalcon\\Parsers, Orm, phalcon, parsers_orm, phalcon_parsers_orm_method_entry, 0);
 
+	/** Reserved words */
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_UPDATE"), 300);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_SET"), 301);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_WHERE"), 302);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_DELETE"), 303);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_FROM"), 304);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_AS"), 305);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_INSERT"), 306);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_INTO"), 307);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_VALUES"), 308);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_SELECT"), 309);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ORDER"), 310);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_BY"), 311);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_LIMIT"), 312);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_GROUP"), 313);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_HAVING"), 314);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_IN"), 315);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ON"), 316);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_INNER"), 317);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_JOIN"), 318);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_LEFT"), 319);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_RIGHT"), 320);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_IS"), 321);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_NULL"), 322);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_NOTIN"), 323);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_CROSS"), 324);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_FULL"), 325);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_OUTER"), 326);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ASC"), 327);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_DESC"), 328);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_OFFSET"), 329);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_DISTINCT"), 330);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_BETWEEN"), 331);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_BETWEEN_NOT"), 332);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_CAST"), 333);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_TRUE"), 334);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_FALSE"), 335);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_CONVERT"), 336);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_USING"), 337);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ALL"), 338);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_FOR"), 339);
+
+	/** Special Tokens */
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_FCALL"), 350);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_NLIKE"), 351);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_STARALL"), 352);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_DOMAINALL"), 353);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_EXPR"), 354);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_QUALIFIED"), 355);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ENCLOSED"), 356);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_NILIKE"), 357);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_RAW_QUALIFIED"), 358);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_INNERJOIN"), 360);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_LEFTJOIN"), 361);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_RIGHTJOIN"), 362);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_CROSSJOIN"), 363);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_FULLJOIN"), 364);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ISNULL"), 365);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ISNOTNULL"), 366);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_MINUS"), 367);
+
+	/** Postgresql Text Search Operators */
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_TS_MATCHES"), 401);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_TS_OR"), 402);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_TS_AND"), 403);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_TS_NEGATE"), 404);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_TS_CONTAINS_ANOTHER"), 405);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_TS_CONTAINS_IN"), 406);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_SUBQUERY"), 407);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_EXISTS"), 408);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_CASE"), 409);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_WHEN"), 410);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_ELSE"), 411);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_END"), 412);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_THEN"), 413);
+
+	zephir_declare_class_constant_long(phalcon_parsers_orm_ce, SL("PHQL_T_WITH"), 415);
+
 	return SUCCESS;
 }
 
@@ -10988,6 +11187,202 @@ static PHP_METHOD(Phalcon_Parsers_Orm, singleQuotes)
 
 
 	phalcon_orm_singlequotes(return_value, &input);
+	RETURN_MM();
+}
+
+
+
+
+#ifdef HAVE_CONFIG_H
+#endif
+
+
+
+
+
+ZEPHIR_INIT_CLASS(Phalcon_Parsers_Parser)
+{
+	ZEPHIR_REGISTER_CLASS(Phalcon\\Parsers, Parser, phalcon, parsers_parser, phalcon_parsers_parser_method_entry, 0);
+
+	return SUCCESS;
+}
+
+static PHP_METHOD(Phalcon_Parsers_Parser, annotationsParse)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *docBlock_param = NULL, *file, file_sub, *line, line_sub;
+	zval docBlock;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&docBlock);
+	ZVAL_UNDEF(&file_sub);
+	ZVAL_UNDEF(&line_sub);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_STR(docBlock)
+		Z_PARAM_ZVAL(file)
+		Z_PARAM_ZVAL(line)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 3, 0, &docBlock_param, &file, &line);
+	zephir_get_strval(&docBlock, docBlock_param);
+
+
+	ZEPHIR_LAST_CALL_STATUS = phannot_parse_annotations(return_value, &docBlock, file, line);
+	zephir_check_call_status();
+	RETURN_MM();
+}
+
+static PHP_METHOD(Phalcon_Parsers_Parser, ormDestroyCache)
+{
+	zval *this_ptr = getThis();
+
+
+
+	phalcon_orm_destroy_cache();
+}
+
+static PHP_METHOD(Phalcon_Parsers_Parser, ormParse)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *phql_param = NULL;
+	zval phql;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&phql);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(phql)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &phql_param);
+	zephir_get_strval(&phql, phql_param);
+
+
+	ZEPHIR_LAST_CALL_STATUS = phql_parse_phql(return_value, &phql);
+	zephir_check_call_status();
+	RETURN_MM();
+}
+
+static PHP_METHOD(Phalcon_Parsers_Parser, ormSingleQuotes)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *input_param = NULL;
+	zval input;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&input);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(input)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &input_param);
+	zephir_get_strval(&input, input_param);
+
+
+	phalcon_orm_singlequotes(return_value, &input);
+	RETURN_MM();
+}
+
+static PHP_METHOD(Phalcon_Parsers_Parser, getUri)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *path_param = NULL;
+	zval path;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&path);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(path)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &path_param);
+	zephir_get_strval(&path, path_param);
+
+
+	phalcon_get_uri(return_value, &path);
+	RETURN_MM();
+}
+
+static PHP_METHOD(Phalcon_Parsers_Parser, replacePaths)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval paths, uri;
+	zval *pattern_param = NULL, *paths_param = NULL, *uri_param = NULL;
+	zval pattern;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&pattern);
+	ZVAL_UNDEF(&paths);
+	ZVAL_UNDEF(&uri);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_STR(pattern)
+		Z_PARAM_ARRAY(paths)
+		Z_PARAM_ARRAY(uri)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 3, 0, &pattern_param, &paths_param, &uri_param);
+	zephir_get_strval(&pattern, pattern_param);
+	zephir_get_arrval(&paths, paths_param);
+	zephir_get_arrval(&uri, uri_param);
+
+
+	phalcon_replace_paths(return_value, &pattern, &paths, &uri);
+	RETURN_MM();
+}
+
+static PHP_METHOD(Phalcon_Parsers_Parser, voltParse)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *viewCode_param = NULL, *currentPath_param = NULL;
+	zval viewCode, currentPath;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&viewCode);
+	ZVAL_UNDEF(&currentPath);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_STR(viewCode)
+		Z_PARAM_STR(currentPath)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 0, &viewCode_param, &currentPath_param);
+	zephir_get_strval(&viewCode, viewCode_param);
+	zephir_get_strval(&currentPath, currentPath_param);
+
+
+	ZEPHIR_LAST_CALL_STATUS = phvolt_parse_view(return_value, &viewCode, &currentPath);
+	zephir_check_call_status();
 	RETURN_MM();
 }
 
@@ -11078,6 +11473,260 @@ static PHP_METHOD(Phalcon_Parsers_Uri, replacePaths)
 ZEPHIR_INIT_CLASS(Phalcon_Parsers_Volt)
 {
 	ZEPHIR_REGISTER_CLASS(Phalcon\\Parsers, Volt, phalcon, parsers_volt, phalcon_parsers_volt_method_entry, 0);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_RAW_BUFFER_SIZE"), 256);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_SCANNER_RETCODE_EOF"), -1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_SCANNER_RETCODE_ERR"), -2);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_SCANNER_RETCODE_IMPOSSIBLE"), -3);
+
+	/** Modes */
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_MODE_RAW"), 0);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_MODE_CODE"), 1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_MODE_COMMENT"), 2);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_IGNORE"), 257);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_INTEGER"), 258);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_DOUBLE"), 259);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_STRING"), 260);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NULL"), 261);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_FALSE"), 262);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_TRUE"), 263);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_IDENTIFIER"), 265);
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_ADD"), "+");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_SUB"), "-");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_MUL"), "*");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_DIV"), "/");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_MOD"), "%");
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_AND"), 266);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_OR"), 267);
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_CONCAT"), "~");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_PIPE"), "|");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_DOT"), ".");
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_COMMA"), 269);
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT"), "!");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_LESS"), "<");
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_LESSEQUAL"), 270);
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_GREATER"), ">");
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_GREATEREQUAL"), 271);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_EQUALS"), 272);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOTEQUALS"), 273);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_IDENTICAL"), 274);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOTIDENTICAL"), 275);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_RANGE"), 276);
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_ASSIGN"), "=");
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_COLON"), 277);
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_QUESTION"), "?");
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_POW"), 278);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_INCR"), 279);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_DECR"), 280);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ADD_ASSIGN"), 281);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_SUB_ASSIGN"), 282);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_MUL_ASSIGN"), 283);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_DIV_ASSIGN"), 284);
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_PARENTHESES_OPEN"), "(");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_PARENTHESES_CLOSE"), ")");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_SBRACKET_OPEN"), "[");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_SBRACKET_CLOSE"), "]");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_CBRACKET_OPEN"), "{");
+
+	zephir_declare_class_constant_string(phalcon_parsers_volt_ce, SL("PHVOLT_T_CBRACKET_CLOSE"), "}");
+
+	/** Reserved words */
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_IF"), 300);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ELSE"), 301);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ELSEIF"), 302);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDIF"), 303);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_FOR"), 304);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDFOR"), 305);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_SET"), 306);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_BLOCK"), 307);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDBLOCK"), 308);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_IN"), 309);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_EXTENDS"), 310);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_IS"), 311);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_DEFINED"), 312);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_INCLUDE"), 313);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_CACHE"), 314);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDCACHE"), 315);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_DO"), 316);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_AUTOESCAPE"), 317);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDAUTOESCAPE"), 318);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_CONTINUE"), 319);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_BREAK"), 320);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ELSEFOR"), 321);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_MACRO"), 322);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDMACRO"), 323);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_WITH"), 324);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_CALL"), 325);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDCALL"), 326);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_RETURN"), 327);
+
+	/** Delimiters */
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_OPEN_DELIMITER"), 330);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_CLOSE_DELIMITER"), 331);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_OPEN_EDELIMITER"), 332);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_CLOSE_EDELIMITER"), 333);
+
+	/** Special Tokens */
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_FCALL"), 350);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_EXPR"), 354);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_QUALIFIED"), 355);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENCLOSED"), 356);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_RAW_FRAGMENT"), 357);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_EMPTY_STATEMENT"), 358);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ECHO"), 359);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ARRAY"), 360);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ARRAYACCESS"), 361);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_ISSET"), 362);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ISSET"), 363);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_RESOLVED_EXPR"), 364);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_SLICE"), 365);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_TERNARY"), 366);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_IN"), 367);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_MINUS"), 368);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_PLUS"), 369);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_EMPTY"), 380);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_EVEN"), 381);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ODD"), 382);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NUMERIC"), 383);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_SCALAR"), 384);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ITERABLE"), 385);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ISEMPTY"), 386);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ISEVEN"), 387);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ISODD"), 388);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ISNUMERIC"), 389);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ISSCALAR"), 390);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ISITERABLE"), 391);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_ISEMPTY"), 392);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_ISEVEN"), 393);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_ISODD"), 394);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_ISNUMERIC"), 395);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_ISSCALAR"), 396);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_NOT_ISITERABLE"), 397);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_RAW"), 400);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDRAW"), 401);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_SWITCH"), 411);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_CASE"), 412);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_DEFAULT"), 413);
+
+	zephir_declare_class_constant_long(phalcon_parsers_volt_ce, SL("PHVOLT_T_ENDSWITCH"), 414);
 
 	return SUCCESS;
 }
@@ -39189,11 +39838,7 @@ zend_class_entry *phalcon_mvc_view_exception_ce;
 zend_class_entry *phalcon_annotations_exception_ce;
 zend_class_entry *phalcon_mvc_model_exception_ce;
 zend_class_entry *phalcon_mvc_view_engine_volt_exception_ce;
-zend_class_entry *phalcon_parsers_annotations_ce;
-zend_class_entry *phalcon_parsers_enum_ce;
-zend_class_entry *phalcon_parsers_orm_ce;
-zend_class_entry *phalcon_parsers_uri_ce;
-zend_class_entry *phalcon_parsers_volt_ce;
+zend_class_entry *phalcon_parsers_parser_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(phalcon)
 
@@ -39231,11 +39876,7 @@ static PHP_MINIT_FUNCTION(phalcon)
 	ZEPHIR_INIT(Phalcon_Annotations_Exception);
 	ZEPHIR_INIT(Phalcon_Mvc_Model_Exception);
 	ZEPHIR_INIT(Phalcon_Mvc_View_Engine_Volt_Exception);
-	ZEPHIR_INIT(Phalcon_Parsers_Annotations);
-	ZEPHIR_INIT(Phalcon_Parsers_Enum);
-	ZEPHIR_INIT(Phalcon_Parsers_Orm);
-	ZEPHIR_INIT(Phalcon_Parsers_Uri);
-	ZEPHIR_INIT(Phalcon_Parsers_Volt);
+	ZEPHIR_INIT(Phalcon_Parsers_Parser);
 	
 	return SUCCESS;
 }

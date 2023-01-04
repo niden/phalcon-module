@@ -51,90 +51,58 @@ ZEPHIR_INIT_FUNCS(phalcon_mvc_view_engine_volt_exception_method_entry) {
 	PHP_FE_END
 };
 
-zend_class_entry *phalcon_parsers_annotations_ce;
+zend_class_entry *phalcon_parsers_parser_ce;
 
-ZEPHIR_INIT_CLASS(Phalcon_Parsers_Annotations);
+ZEPHIR_INIT_CLASS(Phalcon_Parsers_Parser);
 
-static PHP_METHOD(Phalcon_Parsers_Annotations, parse);
+static PHP_METHOD(Phalcon_Parsers_Parser, annotationsParse);
+static PHP_METHOD(Phalcon_Parsers_Parser, ormDestroyCache);
+static PHP_METHOD(Phalcon_Parsers_Parser, ormParse);
+static PHP_METHOD(Phalcon_Parsers_Parser, ormSingleQuotes);
+static PHP_METHOD(Phalcon_Parsers_Parser, getUri);
+static PHP_METHOD(Phalcon_Parsers_Parser, replacePaths);
+static PHP_METHOD(Phalcon_Parsers_Parser, voltParse);
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_annotations_parse, 0, 3, IS_ARRAY, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_annotationsparse, 0, 3, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO(0, docBlock, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, file, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, line, IS_LONG, 0)
+	ZEND_ARG_INFO(0, file)
+	ZEND_ARG_INFO(0, line)
 ZEND_END_ARG_INFO()
 
-ZEPHIR_INIT_FUNCS(phalcon_parsers_annotations_method_entry) {
-	PHP_ME(Phalcon_Parsers_Annotations, parse, arginfo_phalcon_parsers_annotations_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_FE_END
-};
-
-zend_class_entry *phalcon_parsers_enum_ce;
-
-ZEPHIR_INIT_CLASS(Phalcon_Parsers_Enum);
-
-
-zend_class_entry *phalcon_parsers_orm_ce;
-
-ZEPHIR_INIT_CLASS(Phalcon_Parsers_Orm);
-
-static PHP_METHOD(Phalcon_Parsers_Orm, destroyCache);
-static PHP_METHOD(Phalcon_Parsers_Orm, parse);
-static PHP_METHOD(Phalcon_Parsers_Orm, singleQuotes);
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_orm_destroycache, 0, 0, IS_VOID, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_ormdestroycache, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_orm_parse, 0, 1, IS_ARRAY, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_ormparse, 0, 1, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO(0, phql, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_orm_singlequotes, 0, 1, IS_ARRAY, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_ormsinglequotes, 0, 1, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO(0, input, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEPHIR_INIT_FUNCS(phalcon_parsers_orm_method_entry) {
-	PHP_ME(Phalcon_Parsers_Orm, destroyCache, arginfo_phalcon_parsers_orm_destroycache, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_ME(Phalcon_Parsers_Orm, parse, arginfo_phalcon_parsers_orm_parse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_ME(Phalcon_Parsers_Orm, singleQuotes, arginfo_phalcon_parsers_orm_singlequotes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_FE_END
-};
-
-zend_class_entry *phalcon_parsers_uri_ce;
-
-ZEPHIR_INIT_CLASS(Phalcon_Parsers_Uri);
-
-static PHP_METHOD(Phalcon_Parsers_Uri, getUri);
-static PHP_METHOD(Phalcon_Parsers_Uri, replacePaths);
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_uri_geturi, 0, 1, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_geturi, 0, 1, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, path, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_uri_replacepaths, 0, 3, IS_ARRAY, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_replacepaths, 0, 3, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO(0, pattern, IS_STRING, 0)
 	ZEND_ARG_ARRAY_INFO(0, paths, 0)
 	ZEND_ARG_ARRAY_INFO(0, uri, 0)
 ZEND_END_ARG_INFO()
 
-ZEPHIR_INIT_FUNCS(phalcon_parsers_uri_method_entry) {
-	PHP_ME(Phalcon_Parsers_Uri, getUri, arginfo_phalcon_parsers_uri_geturi, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_ME(Phalcon_Parsers_Uri, replacePaths, arginfo_phalcon_parsers_uri_replacepaths, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_FE_END
-};
-
-zend_class_entry *phalcon_parsers_volt_ce;
-
-ZEPHIR_INIT_CLASS(Phalcon_Parsers_Volt);
-
-static PHP_METHOD(Phalcon_Parsers_Volt, parse);
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_volt_parse, 0, 2, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_voltparse, 0, 2, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, viewCode, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, currentPath, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEPHIR_INIT_FUNCS(phalcon_parsers_volt_method_entry) {
-	PHP_ME(Phalcon_Parsers_Volt, parse, arginfo_phalcon_parsers_volt_parse, ZEND_ACC_PUBLIC)
+ZEPHIR_INIT_FUNCS(phalcon_parsers_parser_method_entry) {
+	PHP_ME(Phalcon_Parsers_Parser, annotationsParse, arginfo_phalcon_parsers_parser_annotationsparse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Parsers_Parser, ormDestroyCache, arginfo_phalcon_parsers_parser_ormdestroycache, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Parsers_Parser, ormParse, arginfo_phalcon_parsers_parser_ormparse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Parsers_Parser, ormSingleQuotes, arginfo_phalcon_parsers_parser_ormsinglequotes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Parsers_Parser, getUri, arginfo_phalcon_parsers_parser_geturi, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Parsers_Parser, replacePaths, arginfo_phalcon_parsers_parser_replacepaths, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Parsers_Parser, voltParse, arginfo_phalcon_parsers_parser_voltparse, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
 
