@@ -67,6 +67,14 @@ class Parser
     }
 
     /**
+     * Create the symbol table
+     */
+    public function viewCreateSymbolTable() -> void
+    {
+        create_symbol_table();
+    }
+
+    /**
      * Parse the view code
      */
     public function voltParse(string viewCode, string currentPath) -> string

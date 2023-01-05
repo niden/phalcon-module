@@ -212,6 +212,26 @@ PHP_METHOD(Phalcon_Parsers_Parser, replacePaths)
 }
 
 /**
+ * Create the symbol table
+ */
+PHP_METHOD(Phalcon_Parsers_Parser, viewCreateSymbolTable)
+{
+	zval _0;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&_0);
+
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(&_0);
+	ZEPHIR_CREATE_SYMBOL_TABLE();
+	
+	ZEPHIR_MM_RESTORE();
+}
+
+/**
  * Parse the view code
  */
 PHP_METHOD(Phalcon_Parsers_Parser, voltParse)
