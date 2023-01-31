@@ -69,7 +69,7 @@ class Parser
     /**
      * Create the symbol table
      */
-    public function viewCreateSymbolTable() -> void
+    public static function viewCreateSymbolTable() -> void
     {
         create_symbol_table();
     }
@@ -77,7 +77,7 @@ class Parser
     /**
      * Parse the view code
      */
-    public function voltParse(string viewCode, string currentPath) -> string
+    public static function voltParse(string viewCode, string currentPath) -> string
     {
         return phvolt_parse_view(viewCode, currentPath);
     }
