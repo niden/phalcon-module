@@ -19,9 +19,9 @@
 #include "phalcon/mvc/model/orm.h"
 #include "phalcon/annotations/scanner.h"
 #include "phalcon/annotations/annot.h"
+#include "phalcon/mvc/url/utils.h"
 #include "phalcon/mvc/model/query/scanner.h"
 #include "phalcon/mvc/model/query/phql.h"
-#include "phalcon/mvc/url/utils.h"
 #include "phalcon/mvc/view/engine/volt/scanner.h"
 #include "phalcon/mvc/view/engine/volt/volt.h"
 
@@ -76,6 +76,46 @@ PHP_METHOD(Phalcon_Parsers_Parser, annotationsParse)
 	ZEPHIR_LAST_CALL_STATUS = phannot_parse_annotations(return_value, &docBlock, file, line);
 	zephir_check_call_status();
 	RETURN_MM();
+}
+
+/**
+ * Get the URI
+ */
+PHP_METHOD(Phalcon_Parsers_Parser, getUri)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *path_param = NULL;
+	zval path;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&path);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(path)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &path_param);
+	zephir_get_strval(&path, path_param);
+
+
+	phalcon_get_uri(return_value, &path);
+	RETURN_MM();
+}
+
+/**
+ * Get the Version for the parser module
+ */
+PHP_METHOD(Phalcon_Parsers_Parser, getVersion)
+{
+	zval *this_ptr = getThis();
+
+
+
+	RETURN_STRING("1.0.0");
 }
 
 /**
@@ -145,34 +185,6 @@ PHP_METHOD(Phalcon_Parsers_Parser, ormSingleQuotes)
 
 
 	phalcon_orm_singlequotes(return_value, &input);
-	RETURN_MM();
-}
-
-/**
- * Get the URI
- */
-PHP_METHOD(Phalcon_Parsers_Parser, getUri)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *path_param = NULL;
-	zval path;
-	zval *this_ptr = getThis();
-
-	ZVAL_UNDEF(&path);
-#if PHP_VERSION_ID >= 80000
-	bool is_null_true = 1;
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(path)
-	ZEND_PARSE_PARAMETERS_END();
-#endif
-
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &path_param);
-	zephir_get_strval(&path, path_param);
-
-
-	phalcon_get_uri(return_value, &path);
 	RETURN_MM();
 }
 
