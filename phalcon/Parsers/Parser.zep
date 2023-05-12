@@ -24,6 +24,22 @@ class Parser
     }
 
     /**
+     * Get the URI
+     */
+    public static function getUri(string path) -> string
+    {
+        return phalcon_get_uri(path);
+    }
+
+    /**
+     * Get the Version for the parser module
+     */
+    public static function getVersion() -> string
+    {
+        return "1.0.0";
+    }
+
+    /**
      * Destroy AST Cache
      */
     public static function ormDestroyCache() -> void
@@ -45,14 +61,6 @@ class Parser
     public static function ormSingleQuotes(string input) -> array
     {
         return phalcon_orm_singlequotes(input);
-    }
-
-    /**
-     * Get the URI
-     */
-    public static function getUri(string path) -> string
-    {
-        return phalcon_get_uri(path);
     }
 
     /**
