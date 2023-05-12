@@ -54,7 +54,7 @@ ZEPHIR_INIT_FUNCS(phalcon_parsers_parser_method_entry) {
 	PHP_ME(Phalcon_Parsers_Parser, ormSingleQuotes, arginfo_phalcon_parsers_parser_ormsinglequotes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, getUri, arginfo_phalcon_parsers_parser_geturi, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, replacePaths, arginfo_phalcon_parsers_parser_replacepaths, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_ME(Phalcon_Parsers_Parser, viewCreateSymbolTable, arginfo_phalcon_parsers_parser_viewcreatesymboltable, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Parsers_Parser, voltParse, arginfo_phalcon_parsers_parser_voltparse, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Parsers_Parser, viewCreateSymbolTable, arginfo_phalcon_parsers_parser_viewcreatesymboltable, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Parsers_Parser, voltParse, arginfo_phalcon_parsers_parser_voltparse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_FE_END
 };
