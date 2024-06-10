@@ -1,0 +1,50 @@
+{
+  "name": "niden/phalcon-module",
+  "description": "Phalcon is an open source web framework delivered as a C extension for the PHP language providing high performance and lower resource consumption.",
+  "keywords": [
+    "extension",
+    "phalcon",
+    "framework",
+    "high load",
+    "mvc"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Phalcon Team",
+      "email": "team@phalcon.io",
+      "homepage": "https://phalcon.io/en/team"
+    },
+    {
+      "name": "Contributors",
+      "homepage": "https://github.com/phalcon/cphalcon/graphs/contributors"
+    }
+  ],
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {
+    "phalcon/zephir": "dev-development"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Phalcon\\Parsers\\": "src/"
+    }
+  },
+  "support": {
+    "email": "support@phalcon.io",
+    "issues": "https://github.com/phalcon/cphalcon/issues",
+    "discussions": "https://phalcon.io/discussions/",
+    "source": "https://github.com/phalcon/cphalcon",
+    "docs": "https://phalcon.io/docs/",
+    "rss": "https://blog.phalcon.io/rss"
+  }
+}
