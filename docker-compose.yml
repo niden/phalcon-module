@@ -1,7 +1,3 @@
-# For local development only.
-
-version: '3'
-
 services:
   phalcon-module-8.0:
     container_name: phalcon-module-8.0
@@ -23,6 +19,14 @@ services:
     container_name: phalcon-module-8.2
     hostname: phalcon-module-82
     build: docker/8.2
+    working_dir: /srv
+    volumes:
+      - .:/srv
+
+  phalcon-module-8.3:
+    container_name: phalcon-module-8.3
+    hostname: phalcon-module-83
+    build: docker/8.3
     working_dir: /srv
     volumes:
       - .:/srv
