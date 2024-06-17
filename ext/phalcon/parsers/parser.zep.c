@@ -182,359 +182,137 @@ PHP_METHOD(Phalcon_Parsers_Parser, replacePaths)
 	RETURN_MM();
 }
 
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetEvents)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).events);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetCaseInsensitiveColumnMap)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).case_insensitive_column_map);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetCastLastInsertIdToInt)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).cast_last_insert_id_to_int);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetCastOnHydrate)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).cast_on_hydrate);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetColumnRenaming)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).column_renaming);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetDisableAssignSetters)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).disable_assign_setters);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetEnableLiterals)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).enable_literals);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetExceptionOnFailedSave)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).exception_on_failed_save);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetExceptionOnFailedMetadataSave)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).exception_on_failed_metadata_save);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetNotNullValidations)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).not_null_validations);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetIgnoreUnknownColumns)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).ignore_unknown_columns);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetLateStateBinding)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).late_state_binding);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetResultsetPrefetchRecords)
-{
-
-	RETURN_STRING(ZEPHIR_GLOBAL(orm).resultset_prefetch_records);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetUpdateSnapshotOnSave)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).update_snapshot_on_save);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingGetVirtualForeignKeys)
-{
-
-	RETURN_BOOL(ZEPHIR_GLOBAL(orm).virtual_foreign_keys);
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetEvents)
+PHP_METHOD(Phalcon_Parsers_Parser, settingGet)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
+	zval *input_param = NULL;
+	zval input;
 
-	ZVAL_UNDEF(&value);
+	ZVAL_UNDEF(&input);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
+		Z_PARAM_STR(input)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).events = zend_is_true(&value);
+	zephir_fetch_params(1, 1, 0, &input_param);
+	zephir_get_strval(&input, input_param);
+	do {
+		if (ZEPHIR_IS_STRING(&input, "orm.events")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).events);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.case_insensitive_column_map")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).case_insensitive_column_map);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.cast_last_insert_id_to_int")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).cast_last_insert_id_to_int);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.cast_on_hydrate")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).cast_on_hydrate);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.column_renaming")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).column_renaming);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.disable_assign_setters")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).disable_assign_setters);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.enable_literals")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).enable_literals);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.exception_on_failed_save")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).exception_on_failed_save);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.exception_on_failed_metadata_save")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).exception_on_failed_metadata_save);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.not_null_validations")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).not_null_validations);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.ignore_unknown_columns")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).ignore_unknown_columns);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.late_state_binding")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).late_state_binding);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.resultset_prefetch_records")) {
+			RETURN_MM_STRING(ZEPHIR_GLOBAL(orm).resultset_prefetch_records);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.update_snapshot_on_save")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).update_snapshot_on_save);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.virtual_foreign_keys")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).virtual_foreign_keys);
+		}
+		RETURN_MM_BOOL(0);
+	} while(0);
+
 	ZEPHIR_MM_RESTORE();
 }
 
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetCaseInsensitiveColumnMap)
+PHP_METHOD(Phalcon_Parsers_Parser, settingSet)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
+	zval *value;
+	zval *input_param = NULL, value_sub;
+	zval input;
 
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
+	ZVAL_UNDEF(&input);
+	ZVAL_UNDEF(&value_sub);
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_STR(input)
+		Z_PARAM_ZVAL(value)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).case_insensitive_column_map = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
+	zephir_fetch_params(1, 2, 0, &input_param, &value);
+	zephir_get_strval(&input, input_param);
+	do {
+		if (ZEPHIR_IS_STRING(&input, "orm.events")) {
+			ZEPHIR_GLOBAL(orm).events = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.case_insensitive_column_map")) {
+			ZEPHIR_GLOBAL(orm).case_insensitive_column_map = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.cast_last_insert_id_to_int")) {
+			ZEPHIR_GLOBAL(orm).cast_last_insert_id_to_int = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.cast_on_hydrate")) {
+			ZEPHIR_GLOBAL(orm).cast_on_hydrate = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.column_renaming")) {
+			ZEPHIR_GLOBAL(orm).column_renaming = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.disable_assign_setters")) {
+			ZEPHIR_GLOBAL(orm).disable_assign_setters = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.enable_literals")) {
+			ZEPHIR_GLOBAL(orm).enable_literals = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.exception_on_failed_save")) {
+			ZEPHIR_GLOBAL(orm).exception_on_failed_save = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.exception_on_failed_metadata_save")) {
+			ZEPHIR_GLOBAL(orm).exception_on_failed_metadata_save = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.not_null_validations")) {
+			ZEPHIR_GLOBAL(orm).not_null_validations = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.ignore_unknown_columns")) {
+			ZEPHIR_GLOBAL(orm).ignore_unknown_columns = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.late_state_binding")) {
+			ZEPHIR_GLOBAL(orm).late_state_binding = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.resultset_prefetch_records")) {
+			ZEPHIR_GLOBAL(orm).resultset_prefetch_records = ZSTR_VAL(zval_get_string(value));
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.update_snapshot_on_save")) {
+			ZEPHIR_GLOBAL(orm).update_snapshot_on_save = zend_is_true(value);
+		}
+		if (ZEPHIR_IS_STRING(&input, "orm.virtual_foreign_keys")) {
+			ZEPHIR_GLOBAL(orm).virtual_foreign_keys = zend_is_true(value);
+		}
+	} while(0);
 
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetCastLastInsertIdToInt)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).cast_last_insert_id_to_int = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetCastOnHydrate)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).cast_on_hydrate = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetColumnRenaming)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).column_renaming = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetDisableAssignSetters)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).disable_assign_setters = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetEnableLiterals)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).enable_literals = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetExceptionOnFailedSave)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).exception_on_failed_save = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetExceptionOnFailedMetadataSave)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).exception_on_failed_metadata_save = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetNotNullValidations)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).not_null_validations = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetIgnoreUnknownColumns)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).ignore_unknown_columns = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetLateStateBinding)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).late_state_binding = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetResultsetPrefetchRecords)
-{
-	zval *value_param = NULL, _0;
-	zend_long value;
-
-	ZVAL_UNDEF(&_0);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_LONG(value)
-	ZEND_PARSE_PARAMETERS_END();
-	zephir_fetch_params_without_memory_grow(1, 0, &value_param);
-	ZVAL_LONG(&_0, value);
-	ZEPHIR_GLOBAL(orm).resultset_prefetch_records = ZSTR_VAL(zval_get_string(&_0));
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetUpdateSnapshotOnSave)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).update_snapshot_on_save = zend_is_true(&value);
-	ZEPHIR_MM_RESTORE();
-}
-
-PHP_METHOD(Phalcon_Parsers_Parser, settingSetVirtualForeignKeys)
-{
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *value_param = NULL;
-	zval value;
-
-	ZVAL_UNDEF(&value);
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(value)
-	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
-	ZEPHIR_GLOBAL(orm).virtual_foreign_keys = zend_is_true(&value);
 	ZEPHIR_MM_RESTORE();
 }
 

@@ -74,154 +74,78 @@ class Parser
         return phalcon_replace_paths(pattern, paths, uri);
     }
 
-    public static function settingGetEvents() -> bool
+    public static function settingGet(string input)
     {
-        return globals_get("orm.events");
+        switch input {
+            case "orm.events":
+                return globals_get("orm.events");
+            case "orm.case_insensitive_column_map":
+                return globals_get("orm.case_insensitive_column_map");
+            case "orm.cast_last_insert_id_to_int":
+                return globals_get("orm.cast_last_insert_id_to_int");
+            case "orm.cast_on_hydrate":
+                return globals_get("orm.cast_on_hydrate");
+            case "orm.column_renaming":
+                return globals_get("orm.column_renaming");
+            case "orm.disable_assign_setters":
+                return globals_get("orm.disable_assign_setters");
+            case "orm.enable_literals":
+                return globals_get("orm.enable_literals");
+            case "orm.exception_on_failed_save":
+                return globals_get("orm.exception_on_failed_save");
+            case "orm.exception_on_failed_metadata_save":
+                return globals_get("orm.exception_on_failed_metadata_save");
+            case "orm.not_null_validations":
+                return globals_get("orm.not_null_validations");
+            case "orm.ignore_unknown_columns":
+                return globals_get("orm.ignore_unknown_columns");
+            case "orm.late_state_binding":
+                return globals_get("orm.late_state_binding");
+            case "orm.resultset_prefetch_records": //-
+                return globals_get("orm.resultset_prefetch_records"); //-
+            case "orm.update_snapshot_on_save":
+                return globals_get("orm.update_snapshot_on_save");
+            case "orm.virtual_foreign_keys":
+                return globals_get("orm.virtual_foreign_keys");
+            default:
+                return false;
+        }
     }
 
-    public static function settingGetCaseInsensitiveColumnMap() -> bool
+    public static function settingSet(string input, mixed value) -> void
     {
-        return globals_get("orm.case_insensitive_column_map");
-    }
-
-    public static function settingGetCastLastInsertIdToInt() -> bool
-    {
-        return globals_get("orm.cast_last_insert_id_to_int");
-    }
-
-    public static function settingGetCastOnHydrate() -> bool
-    {
-        return globals_get("orm.cast_on_hydrate");
-    }
-
-    public static function settingGetColumnRenaming() -> bool
-    {
-        return globals_get("orm.column_renaming");
-    }
-
-    public static function settingGetDisableAssignSetters() -> bool
-    {
-        return globals_get("orm.disable_assign_setters");
-    }
-
-    public static function settingGetEnableLiterals() -> bool
-    {
-        return globals_get("orm.enable_literals");
-    }
-
-    public static function settingGetExceptionOnFailedSave() -> bool
-    {
-        return globals_get("orm.exception_on_failed_save");
-    }
-
-    public static function settingGetExceptionOnFailedMetadataSave() -> bool
-    {
-        return globals_get("orm.exception_on_failed_metadata_save");
-    }
-
-    public static function settingGetNotNullValidations() -> bool
-    {
-        return globals_get("orm.not_null_validations");
-    }
-
-    public static function settingGetIgnoreUnknownColumns() -> bool
-    {
-        return globals_get("orm.ignore_unknown_columns");
-    }
-
-    public static function settingGetLateStateBinding() -> bool
-    {
-        return globals_get("orm.late_state_binding");
-    }
-
-    public static function settingGetResultsetPrefetchRecords()
-    {
-        return globals_get("orm.resultset_prefetch_records");
-    }
-
-    public static function settingGetUpdateSnapshotOnSave() -> bool
-    {
-        return globals_get("orm.update_snapshot_on_save");
-    }
-
-    public static function settingGetVirtualForeignKeys() -> bool
-    {
-        return globals_get("orm.virtual_foreign_keys");
-    }
-
-    public static function settingSetEvents(string value) -> void
-    {
-        globals_set("orm.events", value);
-    }
-
-    public static function settingSetCaseInsensitiveColumnMap(string value) -> void
-    {
-        globals_set("orm.case_insensitive_column_map", value);
-    }
-
-    public static function settingSetCastLastInsertIdToInt(string value) -> void
-    {
-        globals_set("orm.cast_last_insert_id_to_int", value);
-    }
-
-    public static function settingSetCastOnHydrate(string value) -> void
-    {
-        globals_set("orm.cast_on_hydrate", value);
-    }
-
-    public static function settingSetColumnRenaming(string value) -> void
-    {
-        globals_set("orm.column_renaming", value);
-    }
-
-    public static function settingSetDisableAssignSetters(string value) -> void
-    {
-        globals_set("orm.disable_assign_setters", value);
-    }
-
-    public static function settingSetEnableLiterals(string value) -> void
-    {
-        globals_set("orm.enable_literals", value);
-    }
-
-    public static function settingSetExceptionOnFailedSave(string value) -> void
-    {
-        globals_set("orm.exception_on_failed_save", value);
-    }
-
-    public static function settingSetExceptionOnFailedMetadataSave(string value) -> void
-    {
-        globals_set("orm.exception_on_failed_metadata_save", value);
-    }
-
-    public static function settingSetNotNullValidations(string value) -> void
-    {
-        globals_set("orm.not_null_validations", value);
-    }
-
-    public static function settingSetIgnoreUnknownColumns(string value) -> void
-    {
-        globals_set("orm.ignore_unknown_columns", value);
-    }
-
-    public static function settingSetLateStateBinding(string value) -> void
-    {
-        globals_set("orm.late_state_binding", value);
-    }
-
-    public static function settingSetResultsetPrefetchRecords(int value) -> void
-    {
-        globals_set("orm.resultset_prefetch_records", value);
-    }
-
-    public static function settingSetUpdateSnapshotOnSave(string value) -> void
-    {
-        globals_set("orm.update_snapshot_on_save", value);
-    }
-
-    public static function settingSetVirtualForeignKeys(string value) -> void
-    {
-        globals_set("orm.virtual_foreign_keys", value);
+        switch input {
+            case "orm.events":
+                globals_set("orm.events", value);
+            case "orm.case_insensitive_column_map":
+                globals_set("orm.case_insensitive_column_map", value);
+            case "orm.cast_last_insert_id_to_int":
+                globals_set("orm.cast_last_insert_id_to_int", value);
+            case "orm.cast_on_hydrate":
+                globals_set("orm.cast_on_hydrate", value);
+            case "orm.column_renaming":
+                globals_set("orm.column_renaming", value);
+            case "orm.disable_assign_setters":
+                globals_set("orm.disable_assign_setters", value);
+            case "orm.enable_literals":
+                globals_set("orm.enable_literals", value);
+            case "orm.exception_on_failed_save":
+                globals_set("orm.exception_on_failed_save", value);
+            case "orm.exception_on_failed_metadata_save":
+                globals_set("orm.exception_on_failed_metadata_save", value);
+            case "orm.not_null_validations":
+                globals_set("orm.not_null_validations", value);
+            case "orm.ignore_unknown_columns":
+                globals_set("orm.ignore_unknown_columns", value);
+            case "orm.late_state_binding":
+                globals_set("orm.late_state_binding", value);
+            case "orm.resultset_prefetch_records": //-
+                globals_set("orm.resultset_prefetch_records", value); //-
+            case "orm.update_snapshot_on_save":
+                globals_set("orm.update_snapshot_on_save", value);
+            case "orm.virtual_foreign_keys":
+                globals_set("orm.virtual_foreign_keys", value);
+        }
     }
 
     /**
