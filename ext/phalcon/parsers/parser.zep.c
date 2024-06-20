@@ -197,6 +197,9 @@ PHP_METHOD(Phalcon_Parsers_Parser, settingGet)
 	zephir_fetch_params(1, 1, 0, &input_param);
 	zephir_get_strval(&input, input_param);
 	do {
+		if (ZEPHIR_IS_STRING(&input, "form.strict_entity_property_check")) {
+			RETURN_MM_BOOL(ZEPHIR_GLOBAL(form).strict_entity_property_check);
+		}
 		if (ZEPHIR_IS_STRING(&input, "orm.events")) {
 			RETURN_MM_BOOL(ZEPHIR_GLOBAL(orm).events);
 		}
@@ -266,6 +269,9 @@ PHP_METHOD(Phalcon_Parsers_Parser, settingSet)
 	zephir_fetch_params(1, 2, 0, &input_param, &value);
 	zephir_get_strval(&input, input_param);
 	do {
+		if (ZEPHIR_IS_STRING(&input, "form.strict_entity_property_check")) {
+			ZEPHIR_GLOBAL(form).strict_entity_property_check = zend_is_true(value);
+		}
 		if (ZEPHIR_IS_STRING(&input, "orm.events")) {
 			ZEPHIR_GLOBAL(orm).events = zend_is_true(value);
 		}

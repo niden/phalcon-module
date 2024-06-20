@@ -22,6 +22,10 @@ typedef struct _zephir_struct_db {
 	zend_bool force_casting;
 } zephir_struct_db;
 
+typedef struct _zephir_struct_form { 
+	zend_bool strict_entity_property_check;
+} zephir_struct_form;
+
 typedef struct _zephir_struct_orm { 
 	HashTable*  ast_cache;
 	int cache_level;
@@ -43,6 +47,7 @@ typedef struct _zephir_struct_orm {
 	int unique_cache_id;
 	zend_bool update_snapshot_on_save;
 	zend_bool virtual_foreign_keys;
+	zend_bool dynamic_update;
 } zephir_struct_orm;
 
 typedef struct _zephir_struct_warning { 
@@ -68,6 +73,7 @@ ZEND_BEGIN_MODULE_GLOBALS(phalcon)
 
 	
 	zephir_struct_db db;
+	zephir_struct_form form;
 	zephir_struct_orm orm;
 	zephir_struct_warning warning;
 

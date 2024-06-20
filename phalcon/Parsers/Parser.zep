@@ -77,6 +77,8 @@ class Parser
     public static function settingGet(string input)
     {
         switch input {
+            case "form.strict_entity_property_check":
+                return globals_get("form.strict_entity_property_check");
             case "orm.events":
                 return globals_get("orm.events");
             case "orm.case_insensitive_column_map":
@@ -115,6 +117,8 @@ class Parser
     public static function settingSet(string input, mixed value) -> void
     {
         switch input {
+            case "form.strict_entity_property_check":
+                globals_set("form.strict_entity_property_check", value);
             case "orm.events":
                 globals_set("orm.events", value);
             case "orm.case_insensitive_column_map":

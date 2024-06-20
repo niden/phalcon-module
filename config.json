@@ -69,6 +69,10 @@
       "type": "bool",
       "default": false
     },
+    "form.strict_entity_property_check": {
+      "type": "bool",
+      "default": false
+    },
     "orm.ast_cache": {
       "type": "hash",
       "default": "NULL"
@@ -146,6 +150,10 @@
       "default": true
     },
     "orm.virtual_foreign_keys": {
+      "type": "bool",
+      "default": true
+    },
+    "orm.dynamic_update": {
       "type": "bool",
       "default": true
     },
