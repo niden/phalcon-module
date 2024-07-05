@@ -10,8 +10,6 @@ PHP_METHOD(Phalcon_Parsers_Parser, ormDestroyCache);
 PHP_METHOD(Phalcon_Parsers_Parser, ormParse);
 PHP_METHOD(Phalcon_Parsers_Parser, ormSingleQuotes);
 PHP_METHOD(Phalcon_Parsers_Parser, replacePaths);
-PHP_METHOD(Phalcon_Parsers_Parser, settingGet);
-PHP_METHOD(Phalcon_Parsers_Parser, settingSet);
 PHP_METHOD(Phalcon_Parsers_Parser, viewCreateSymbolTable);
 PHP_METHOD(Phalcon_Parsers_Parser, voltParse);
 
@@ -45,16 +43,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_replacepa
 	ZEND_ARG_ARRAY_INFO(0, uri, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_parsers_parser_settingget, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, input, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_settingset, 0, 2, IS_VOID, 0)
-
-	ZEND_ARG_TYPE_INFO(0, input, IS_STRING, 0)
-	ZEND_ARG_INFO(0, value)
-ZEND_END_ARG_INFO()
-
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_viewcreatesymboltable, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
@@ -71,8 +59,6 @@ ZEPHIR_INIT_FUNCS(phalcon_parsers_parser_method_entry) {
 	PHP_ME(Phalcon_Parsers_Parser, ormParse, arginfo_phalcon_parsers_parser_ormparse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, ormSingleQuotes, arginfo_phalcon_parsers_parser_ormsinglequotes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, replacePaths, arginfo_phalcon_parsers_parser_replacepaths, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_ME(Phalcon_Parsers_Parser, settingGet, arginfo_phalcon_parsers_parser_settingget, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_ME(Phalcon_Parsers_Parser, settingSet, arginfo_phalcon_parsers_parser_settingset, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, viewCreateSymbolTable, arginfo_phalcon_parsers_parser_viewcreatesymboltable, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, voltParse, arginfo_phalcon_parsers_parser_voltparse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_FE_END
