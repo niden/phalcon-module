@@ -1,12 +1,4 @@
 services:
-  phalcon-module-8.0:
-    container_name: phalcon-module-8.0
-    hostname: phalcon-module-80
-    build: docker/8.0
-    working_dir: /srv
-    volumes:
-      - .:/srv
-
   phalcon-module-8.1:
     container_name: phalcon-module-8.1
     hostname: phalcon-module-81
@@ -27,6 +19,14 @@ services:
     container_name: phalcon-module-8.3
     hostname: phalcon-module-83
     build: docker/8.3
+    working_dir: /srv
+    volumes:
+      - .:/srv
+
+  phalcon-module-8.4:
+    container_name: phalcon-module-8.4
+    hostname: phalcon-module-84
+    build: docker/8.4
     working_dir: /srv
     volumes:
       - .:/srv
