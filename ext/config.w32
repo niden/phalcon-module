@@ -9,13 +9,11 @@ if (PHP_PHALCON != "no") {
     ADD_EXTENSION_DEP("phalcon", "json");
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
-  ADD_SOURCES(configure_module_dirname + "/phalcon/annotations", "scanner.c parser.c", "phalcon");
-	ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/model", "orm.c", "phalcon");
+  ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/model", "orm.c", "phalcon");
 	ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/model/query", "scanner.c parser.c", "phalcon");
 	ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/view/engine/volt", "parser.c scanner.c", "phalcon");
 	ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/url", "utils.c", "phalcon");
-  ADD_SOURCES(configure_module_dirname + "/phalcon/annotations", "exception.zep.c", "phalcon");
-	ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/model", "exception.zep.c", "phalcon");
+  ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/model", "exception.zep.c", "phalcon");
 	ADD_SOURCES(configure_module_dirname + "/phalcon/mvc/view", "exception.zep.c", "phalcon");
 	ADD_SOURCES(configure_module_dirname + "/phalcon/parsers", "parser.zep.c", "phalcon");
   ADD_FLAG("CFLAGS_PHALCON", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");

@@ -2,8 +2,6 @@
 // These are priority files, their contents must be put into phalcon.c before any other source files
 
 return [
-    'phalcon/annotations/scanner.h',
-    'phalcon/annotations/annot.h',
     'phalcon/mvc/model/orm.h',
     'phalcon/mvc/model/query/scanner.h',
     'phalcon/mvc/model/query/phql.h',
@@ -13,8 +11,6 @@ return [
     'phalcon/mvc/model/query/parser.php.inc.h',
     'phalcon/mvc/view/engine/volt/parser.php.h',
     'phalcon/mvc/view/engine/volt/parser.php.inc.h',
-    'phalcon/annotations/parser.php.h',
-    'phalcon/annotations/parser.php.inc.h',
     'phalcon/mvc/url/utils.h',
     'kernel/main.h',
     'kernel/memory.h',

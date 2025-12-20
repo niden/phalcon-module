@@ -24,7 +24,6 @@
 
 #include "phalcon/mvc/model/orm.h"
 
-zend_class_entry *phalcon_annotations_exception_ce;
 zend_class_entry *phalcon_mvc_model_exception_ce;
 zend_class_entry *phalcon_mvc_view_exception_ce;
 zend_class_entry *phalcon_parsers_parser_ce;
@@ -43,7 +42,6 @@ static PHP_MINIT_FUNCTION(phalcon)
 {
 	REGISTER_INI_ENTRIES();
 	zephir_module_init();
-	ZEPHIR_INIT(Phalcon_Annotations_Exception);
 	ZEPHIR_INIT(Phalcon_Mvc_Model_Exception);
 	ZEPHIR_INIT(Phalcon_Mvc_View_Exception);
 	ZEPHIR_INIT(Phalcon_Parsers_Parser);
