@@ -30,3 +30,11 @@ services:
     working_dir: /srv
     volumes:
       - .:/srv
+
+  phalcon-module-8.5:
+    container_name: phalcon-module-8.5
+    hostname: phalcon-module-85
+    build: docker/8.5
+    working_dir: /srv
+    volumes:
+      - .:/srv
