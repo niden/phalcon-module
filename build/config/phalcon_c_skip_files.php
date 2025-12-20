@@ -11,12 +11,19 @@ return [
     'phalcon.h',
     'phalcon.c',
 
+    'phalcon/annotations/scanner.h',
+    'phalcon/annotations/annot.h',
     'phalcon/mvc/url/utils.h',
     'phalcon/mvc/model/orm.h',
     'phalcon/mvc/model/query/scanner.h',
     'phalcon/mvc/model/query/phql.h',
     'phalcon/mvc/view/engine/volt/scanner.h',
     'phalcon/mvc/view/engine/volt/volt.h',
+
+    'phalcon/annotations/base.c',
+    'phalcon/annotations/lempar.c',
+    'phalcon/annotations/lemon.c',
+    'phalcon/annotations/parser.php.c',
 
     'phalcon/mvc/view/engine/volt/base.c',
     'phalcon/mvc/view/engine/volt/lempar.c',

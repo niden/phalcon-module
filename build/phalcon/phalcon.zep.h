@@ -10,6 +10,11 @@ zend_class_entry *phalcon_mvc_view_exception_ce;
 ZEPHIR_INIT_CLASS(Phalcon_Mvc_View_Exception);
 
 
+zend_class_entry *phalcon_annotations_exception_ce;
+
+ZEPHIR_INIT_CLASS(Phalcon_Annotations_Exception);
+
+
 zend_class_entry *phalcon_mvc_model_exception_ce;
 
 ZEPHIR_INIT_CLASS(Phalcon_Mvc_Model_Exception);
@@ -50,6 +55,7 @@ zend_class_entry *phalcon_parsers_parser_ce;
 
 ZEPHIR_INIT_CLASS(Phalcon_Parsers_Parser);
 
+static PHP_METHOD(Phalcon_Parsers_Parser, annotationsParse);
 static PHP_METHOD(Phalcon_Parsers_Parser, ormDestroyCache);
 static PHP_METHOD(Phalcon_Parsers_Parser, ormParse);
 static PHP_METHOD(Phalcon_Parsers_Parser, ormSingleQuotes);
@@ -57,6 +63,12 @@ static PHP_METHOD(Phalcon_Parsers_Parser, getUri);
 static PHP_METHOD(Phalcon_Parsers_Parser, replacePaths);
 static PHP_METHOD(Phalcon_Parsers_Parser, viewCreateSymbolTable);
 static PHP_METHOD(Phalcon_Parsers_Parser, voltParse);
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_annotationsparse, 0, 3, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(0, docBlock, IS_STRING, 0)
+	ZEND_ARG_INFO(0, file)
+	ZEND_ARG_INFO(0, line)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_ormdestroycache, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
@@ -88,6 +100,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_parsers_parser_voltparse
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(phalcon_parsers_parser_method_entry) {
+	PHP_ME(Phalcon_Parsers_Parser, annotationsParse, arginfo_phalcon_parsers_parser_annotationsparse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, ormDestroyCache, arginfo_phalcon_parsers_parser_ormdestroycache, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, ormParse, arginfo_phalcon_parsers_parser_ormparse, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Parsers_Parser, ormSingleQuotes, arginfo_phalcon_parsers_parser_ormsinglequotes, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)

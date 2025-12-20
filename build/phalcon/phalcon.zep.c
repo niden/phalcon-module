@@ -203,6 +203,9 @@ typedef struct _phannot_parser_status {
 #define PHANNOT_PARSING_OK 1
 #define PHANNOT_PARSING_FAILED 0
 
+static int phannot_parse_annotations(zval *result, zval *comment, zval *file_path, zval *line);
+static int phannot_internal_parse_annotations(zval **result, const char *comment, int comment_len, const char *file_path, int line, char **error_msg);
+
 #endif /* PHALCON_ANNOTATIONS_ANNOT_H */
 
 
@@ -10707,6 +10710,103 @@ static void zephir_exit(zval *ptr)
 
 
 
+ZEPHIR_INIT_CLASS(Phalcon_Parsers_Annotations)
+{
+	ZEPHIR_REGISTER_CLASS(Phalcon\\Parsers, Annotations, phalcon, parsers_annotations, phalcon_parsers_annotations_method_entry, 0);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_EOF"), -1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_ERR"), -2);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_SCANNER_RETCODE_IMPOSSIBLE"), -3);
+
+	/** Modes */
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_MODE_RAW"), 0);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_MODE_ANNOTATION"), 1);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_IGNORE"), 297);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOCBLOCK_ANNOTATION"), 299);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ANNOTATION"), 300);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_INTEGER"), 301);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOUBLE"), 302);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_STRING"), 303);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_NULL"), 304);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_FALSE"), 305);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_TRUE"), 306);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_IDENTIFIER"), 307);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ARRAY"), 308);
+
+	zephir_declare_class_constant_long(phalcon_parsers_annotations_ce, SL("PHANNOT_T_ARBITRARY_TEXT"), 309);
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_AT"), "@");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_DOT"), ".");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_COMMA"), ",");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_EQUALS"), "=");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_COLON"), ":");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_BRACKET_OPEN"), "{");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_BRACKET_CLOSE"), "}");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_SBRACKET_OPEN"), "[");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_SBRACKET_CLOSE"), "]");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_PARENTHESES_OPEN"), "(");
+
+	zephir_declare_class_constant_string(phalcon_parsers_annotations_ce, SL("PHANNOT_T_PARENTHESES_CLOSE"), ")");
+
+	return SUCCESS;
+}
+
+static PHP_METHOD(Phalcon_Parsers_Annotations, parse)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *docBlock_param = NULL, *file, file_sub, *line, line_sub;
+	zval docBlock;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&docBlock);
+	ZVAL_UNDEF(&file_sub);
+	ZVAL_UNDEF(&line_sub);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_STR(docBlock)
+		Z_PARAM_ZVAL(file)
+		Z_PARAM_ZVAL(line)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 3, 0, &docBlock_param, &file, &line);
+	zephir_get_strval(&docBlock, docBlock_param);
+
+
+	ZEPHIR_LAST_CALL_STATUS = phannot_parse_annotations(return_value, &docBlock, file, line);
+	zephir_check_call_status();
+	RETURN_MM();
+}
+
+
+
 
 #ifdef HAVE_CONFIG_H
 #endif
@@ -11107,6 +11207,37 @@ ZEPHIR_INIT_CLASS(Phalcon_Parsers_Parser)
 	return SUCCESS;
 }
 
+static PHP_METHOD(Phalcon_Parsers_Parser, annotationsParse)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *docBlock_param = NULL, *file, file_sub, *line, line_sub;
+	zval docBlock;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&docBlock);
+	ZVAL_UNDEF(&file_sub);
+	ZVAL_UNDEF(&line_sub);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_STR(docBlock)
+		Z_PARAM_ZVAL(file)
+		Z_PARAM_ZVAL(line)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 3, 0, &docBlock_param, &file, &line);
+	zephir_get_strval(&docBlock, docBlock_param);
+
+
+	ZEPHIR_LAST_CALL_STATUS = phannot_parse_annotations(return_value, &docBlock, file, line);
+	zephir_check_call_status();
+	RETURN_MM();
+}
+
 static PHP_METHOD(Phalcon_Parsers_Parser, ormDestroyCache)
 {
 	zval *this_ptr = getThis();
@@ -11238,7 +11369,7 @@ static PHP_METHOD(Phalcon_Parsers_Parser, viewCreateSymbolTable)
 
 	ZEPHIR_INIT_VAR(&_0);
 	ZEPHIR_CREATE_SYMBOL_TABLE();
-
+	
 	ZEPHIR_MM_RESTORE();
 }
 
@@ -11653,6 +11784,16 @@ static PHP_METHOD(Phalcon_Parsers_Volt, parse)
 #ifdef HAVE_CONFIG_H
 #endif
 
+
+
+
+
+ZEPHIR_INIT_CLASS(Phalcon_Annotations_Exception)
+{
+	ZEPHIR_REGISTER_CLASS_EX(Phalcon\\Annotations, Exception, phalcon, annotations_exception, zend_ce_exception, NULL, 0);
+
+	return SUCCESS;
+}
 
 
 
@@ -12674,6 +12815,51 @@ static void phannot_scanner_error_msg(phannot_parser_status *parser_status, char
 	}
 }
 
+static int phannot_parse_annotations(zval *result, zval *comment, zval *file_path, zval *line) {
+
+	char *comment_str;
+	int comment_len;
+	char *file_path_str;
+	int line_num;
+
+	char *error_msg = NULL;
+
+	ZVAL_NULL(result);
+
+	if (Z_TYPE_P(comment) == IS_STRING) {
+		comment_str = Z_STRVAL_P(comment);
+		comment_len = Z_STRLEN_P(comment);
+	} else {
+		comment_str = "";
+		comment_len = 0;
+	}
+
+	if (Z_TYPE_P(file_path) == IS_STRING) {
+		file_path_str = Z_STRVAL_P(file_path);
+	} else {
+		file_path_str = "eval";
+	}
+
+	if (Z_TYPE_P(line) == IS_LONG) {
+		line_num = Z_LVAL_P(line);
+	} else {
+		line_num = 0;
+	}
+
+	if (phannot_internal_parse_annotations(&result, comment_str, comment_len, file_path_str, line_num, &error_msg) == FAILURE) {
+		if (likely(error_msg != NULL)) {
+			zephir_throw_exception_string(phalcon_annotations_exception_ce, error_msg, strlen(error_msg));
+			efree(error_msg);
+		} else {
+			zephir_throw_exception_string(phalcon_annotations_exception_ce, SL("There was an error parsing annotation"));
+		}
+
+		return FAILURE;
+	}
+
+	return SUCCESS;
+}
+
 static void phannot_remove_comment_separators(char **ret, int *ret_len, const char *comment, int length, int *start_lines)
 {
 	char ch;
@@ -12769,6 +12955,204 @@ static void phannot_remove_comment_separators(char **ret, int *ret_len, const ch
 	}
 }
 
+static int phannot_internal_parse_annotations(zval **result, const char *comment, int comment_len, const char *file_path, int line, char **error_msg)
+{
+	phannot_scanner_state *state;
+	phannot_scanner_token token;
+	int start_lines;
+	int scanner_status, status = SUCCESS;
+	phannot_parser_status *parser_status = NULL;
+	void* phannot_parser;
+	char *processed_comment;
+	int processed_comment_len;
+
+	*error_msg = NULL;
+
+	if (UNEXPECTED(!comment)) {
+		ZVAL_BOOL(*result, 0);
+		spprintf(error_msg, 0, "Empty annotation");
+		return FAILURE;
+	}
+
+	if (comment_len < 2) {
+		ZVAL_BOOL(*result, 0);
+		return SUCCESS;
+	}
+
+	phannot_remove_comment_separators(&processed_comment, &processed_comment_len, comment, comment_len, &start_lines);
+
+	if (processed_comment_len < 2) {
+		ZVAL_BOOL(*result, 0);
+		if (processed_comment) {
+			efree(processed_comment);
+		}
+
+		return SUCCESS;
+	}
+
+	phannot_parser = phannot_Alloc(phannot_wrapper_alloc);
+	if (unlikely(!phannot_parser)) {
+		ZVAL_BOOL(*result, 0);
+		return FAILURE;
+	}
+
+	parser_status = emalloc(sizeof(phannot_parser_status) + sizeof(phannot_scanner_state));
+	state         = (phannot_scanner_state*)((char*)parser_status + sizeof(phannot_parser_status));
+
+	parser_status->status = PHANNOT_PARSING_OK;
+	parser_status->scanner_state = state;
+	parser_status->token = &token;
+	parser_status->syntax_error = NULL;
+
+	state->active_token = 0;
+	state->start = processed_comment;
+	state->start_length = 0;
+	state->mode = PHANNOT_MODE_RAW;
+	state->active_file = file_path;
+
+	token.value = NULL;
+	token.len = 0;
+
+	if (line) {
+		state->active_line = line - start_lines;
+	} else {
+		state->active_line = 1;
+	}
+
+	state->end = state->start;
+
+	while(0 <= (scanner_status = phannot_get_token(state, &token))) {
+
+		state->active_token = token.opcode;
+
+		state->start_length = processed_comment + processed_comment_len - state->start;
+
+		switch (token.opcode) {
+
+			case PHANNOT_T_IGNORE:
+				break;
+
+			case PHANNOT_T_AT:
+				phannot_(phannot_parser, PHANNOT_AT, NULL, parser_status);
+				break;
+			case PHANNOT_T_COMMA:
+				phannot_(phannot_parser, PHANNOT_COMMA, NULL, parser_status);
+				break;
+			case PHANNOT_T_EQUALS:
+				phannot_(phannot_parser, PHANNOT_EQUALS, NULL, parser_status);
+				break;
+			case PHANNOT_T_COLON:
+				phannot_(phannot_parser, PHANNOT_COLON, NULL, parser_status);
+				break;
+
+			case PHANNOT_T_PARENTHESES_OPEN:
+				phannot_(phannot_parser, PHANNOT_PARENTHESES_OPEN, NULL, parser_status);
+				break;
+			case PHANNOT_T_PARENTHESES_CLOSE:
+				phannot_(phannot_parser, PHANNOT_PARENTHESES_CLOSE, NULL, parser_status);
+				break;
+
+			case PHANNOT_T_BRACKET_OPEN:
+				phannot_(phannot_parser, PHANNOT_BRACKET_OPEN, NULL, parser_status);
+				break;
+			case PHANNOT_T_BRACKET_CLOSE:
+				phannot_(phannot_parser, PHANNOT_BRACKET_CLOSE, NULL, parser_status);
+				break;
+
+			case PHANNOT_T_SBRACKET_OPEN:
+				phannot_(phannot_parser, PHANNOT_SBRACKET_OPEN, NULL, parser_status);
+				break;
+			case PHANNOT_T_SBRACKET_CLOSE:
+				phannot_(phannot_parser, PHANNOT_SBRACKET_CLOSE, NULL, parser_status);
+				break;
+
+			case PHANNOT_T_NULL:
+				phannot_(phannot_parser, PHANNOT_NULL, NULL, parser_status);
+				break;
+			case PHANNOT_T_TRUE:
+				phannot_(phannot_parser, PHANNOT_TRUE, NULL, parser_status);
+				break;
+			case PHANNOT_T_FALSE:
+				phannot_(phannot_parser, PHANNOT_FALSE, NULL, parser_status);
+				break;
+
+			case PHANNOT_T_INTEGER:
+				phannot_parse_with_token(phannot_parser, PHANNOT_T_INTEGER, PHANNOT_INTEGER, &token, parser_status);
+				break;
+			case PHANNOT_T_DOUBLE:
+				phannot_parse_with_token(phannot_parser, PHANNOT_T_DOUBLE, PHANNOT_DOUBLE, &token, parser_status);
+				break;
+			case PHANNOT_T_STRING:
+				phannot_parse_with_token(phannot_parser, PHANNOT_T_STRING, PHANNOT_STRING, &token, parser_status);
+				break;
+			case PHANNOT_T_IDENTIFIER:
+				phannot_parse_with_token(phannot_parser, PHANNOT_T_IDENTIFIER, PHANNOT_IDENTIFIER, &token, parser_status);
+				break;
+			/*case PHANNOT_T_ARBITRARY_TEXT:
+				phannot_parse_with_token(phannot_parser, PHANNOT_T_ARBITRARY_TEXT, PHANNOT_ARBITRARY_TEXT, &token, parser_status);
+				break;*/
+
+			default:
+				parser_status->status = PHANNOT_PARSING_FAILED;
+				if (!*error_msg) {
+					spprintf(error_msg, 0, "Scanner: unknown opcode %d on in %s line %d", token.opcode, state->active_file, state->active_line);
+				}
+				break;
+		}
+
+		if (parser_status->status != PHANNOT_PARSING_OK) {
+			status = FAILURE;
+			break;
+		}
+
+		state->end = state->start;
+	}
+
+	if (status != FAILURE) {
+		switch (scanner_status) {
+
+			case PHANNOT_SCANNER_RETCODE_ERR:
+			case PHANNOT_SCANNER_RETCODE_IMPOSSIBLE:
+				if (!*error_msg) {
+					phannot_scanner_error_msg(parser_status, error_msg);
+				}
+				status = FAILURE;
+				break;
+
+			default:
+				phannot_(phannot_parser, 0, NULL, parser_status);
+		}
+	}
+
+	state->active_token = 0;
+	state->start = NULL;
+
+	if (parser_status->status != PHANNOT_PARSING_OK) {
+		status = FAILURE;
+		if (parser_status->syntax_error) {
+			if (!*error_msg) {
+				*error_msg = parser_status->syntax_error;
+			} else {
+				efree(parser_status->syntax_error);
+			}
+		}
+	}
+
+	phannot_Free(phannot_parser, phannot_wrapper_free);
+
+	if (status != FAILURE) {
+		if (parser_status->status == PHANNOT_PARSING_OK) {
+			ZVAL_ZVAL(*result, &parser_status->ret, 1, 1);
+		}
+	}
+
+	efree(processed_comment);
+	efree(parser_status);
+
+	return status;
+}
+
+
 /* Generated by re2c 1.1.1 */
 /* scanner.re
  * This file is part of the Phalcon Framework.
@@ -12814,7 +13198,7 @@ static int phannot_get_token(phannot_scanner_state *s, phannot_scanner_token *to
 
 		} else {
 
-
+		
 		{
 			AACTYPE aach;
 			unsigned int aaaccept = 0;
@@ -17018,10 +17402,10 @@ static int phql_get_token(phql_scanner_state *s, phql_scanner_token *token) {
 	char *q = PPCURSOR;
 	int status = PHQL_SCANNER_RETCODE_IMPOSSIBLE;
 
-
+	
 	while (PHQL_SCANNER_RETCODE_IMPOSSIBLE == status) {
 
-
+		
 		{
 			PPCTYPE ppch;
 			unsigned int ppaccept = 0;
@@ -23410,7 +23794,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Simple, partial)
 		zephir_fast_array_merge(&mergedParams, &viewParams, params);
 		ZEPHIR_INIT_VAR(&_1$$3);
 		ZEPHIR_CREATE_SYMBOL_TABLE();
-
+		
 	} else {
 		ZEPHIR_CPY_WRT(&mergedParams, params);
 	}
@@ -23497,7 +23881,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Simple, render)
 
 	ZEPHIR_INIT_VAR(&_0);
 	ZEPHIR_CREATE_SYMBOL_TABLE();
-
+	
 	ZEPHIR_CALL_FUNCTION(NULL, "ob_start", NULL, 387);
 	zephir_check_call_status();
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("viewParams"), PH_NOISY_CC | PH_READONLY);
@@ -23774,7 +24158,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Simple, loadTemplateEngines)
 				ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&registeredEngines), _5$$5, _6$$5, _3$$5)
 				{
 					ZEPHIR_INIT_NVAR(&extension);
-					if (_6$$5 != NULL) {
+					if (_6$$5 != NULL) { 
 						ZVAL_STR_COPY(&extension, _6$$5);
 					} else {
 						ZVAL_LONG(&extension, _5$$5);
@@ -23961,7 +24345,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Simple, internalRender)
 		ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&engines), _6, _7, _4)
 		{
 			ZEPHIR_INIT_NVAR(&extension);
-			if (_7 != NULL) {
+			if (_7 != NULL) { 
 				ZVAL_STR_COPY(&extension, _7);
 			} else {
 				ZVAL_LONG(&extension, _6);
@@ -24141,10 +24525,10 @@ zend_object *zephir_init_properties_Phalcon_Mvc_View_Simple(zend_class_entry *cl
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_3$$4);
 	ZVAL_UNDEF(&_5$$5);
-
+	
 
 		ZEPHIR_MM_GROW();
-
+	
 	{
 		zval local_this_ptr, *this_ptr = &local_this_ptr;
 		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
@@ -24387,7 +24771,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Engine_Php, render)
 			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(params), _2$$4, _3$$4, _0$$4)
 			{
 				ZEPHIR_INIT_NVAR(&key);
-				if (_3$$4 != NULL) {
+				if (_3$$4 != NULL) { 
 					ZVAL_STR_COPY(&key, _3$$4);
 				} else {
 					ZVAL_LONG(&key, _2$$4);
@@ -24937,7 +25321,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Engine_Volt, render)
 			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(params), _7$$8, _8$$8, _5$$8)
 			{
 				ZEPHIR_INIT_NVAR(&key);
-				if (_8$$8 != NULL) {
+				if (_8$$8 != NULL) { 
 					ZVAL_STR_COPY(&key, _8$$8);
 				} else {
 					ZVAL_LONG(&key, _7$$8);
@@ -25181,10 +25565,10 @@ zend_object *zephir_init_properties_Phalcon_Mvc_View_Engine_Volt(zend_class_entr
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_3$$4);
-
+	
 
 		ZEPHIR_MM_GROW();
-
+	
 	{
 		zval local_this_ptr, *this_ptr = &local_this_ptr;
 		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
@@ -26680,7 +27064,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Engine_Volt_Compiler, compileMacro)
 			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&parameters), _8$$6, _9$$6, _6$$6)
 			{
 				ZEPHIR_INIT_NVAR(&position);
-				if (_9$$6 != NULL) {
+				if (_9$$6 != NULL) { 
 					ZVAL_STR_COPY(&position, _9$$6);
 				} else {
 					ZVAL_LONG(&position, _8$$6);
@@ -28589,7 +28973,7 @@ static PHP_METHOD(Phalcon_Mvc_View_Engine_Volt_Compiler, compileSource)
 			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&extendedBlocks), _5$$7, _6$$7, _3$$7)
 			{
 				ZEPHIR_INIT_NVAR(&name);
-				if (_6$$7 != NULL) {
+				if (_6$$7 != NULL) { 
 					ZVAL_STR_COPY(&name, _6$$7);
 				} else {
 					ZVAL_LONG(&name, _5$$7);
@@ -29868,10 +30252,10 @@ zend_object *zephir_init_properties_Phalcon_Mvc_View_Engine_Volt_Compiler(zend_c
 	ZVAL_UNDEF(&_9$$7);
 	ZVAL_UNDEF(&_11$$8);
 	ZVAL_UNDEF(&_13$$9);
-
+	
 
 		ZEPHIR_MM_GROW();
-
+	
 	{
 		zval local_this_ptr, *this_ptr = &local_this_ptr;
 		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
@@ -30027,10 +30411,10 @@ zend_object *zephir_init_properties_Phalcon_Mvc_View_Engine_Volt_Exception(zend_
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 		ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1$$3);
-
+	
 
 		ZEPHIR_MM_GROW();
-
+	
 	{
 		zval local_this_ptr, *this_ptr = &local_this_ptr;
 		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
@@ -34058,7 +34442,7 @@ static int phvolt_get_token(phvolt_scanner_state *s, phvolt_scanner_token *token
 			}
 
 		} else {
-
+		
 		{
 			VVCTYPE vvch;
 			unsigned int vvaccept = 0;
@@ -39468,6 +39852,7 @@ vv366:
 
 
 zend_class_entry *phalcon_mvc_view_exception_ce;
+zend_class_entry *phalcon_annotations_exception_ce;
 zend_class_entry *phalcon_mvc_model_exception_ce;
 zend_class_entry *phalcon_mvc_view_engine_volt_exception_ce;
 zend_class_entry *phalcon_parsers_parser_ce;
@@ -39477,8 +39862,8 @@ ZEND_DECLARE_MODULE_GLOBALS(phalcon)
 PHP_INI_BEGIN()
 	STD_PHP_INI_BOOLEAN("phalcon.db.escape_identifiers", "1", PHP_INI_ALL, OnUpdateBool, db.escape_identifiers, zend_phalcon_globals, phalcon_globals)
 	STD_PHP_INI_BOOLEAN("phalcon.db.force_casting", "0", PHP_INI_ALL, OnUpdateBool, db.force_casting, zend_phalcon_globals, phalcon_globals)
-
-
+	
+	
 	STD_PHP_INI_BOOLEAN("phalcon.orm.case_insensitive_column_map", "0", PHP_INI_ALL, OnUpdateBool, orm.case_insensitive_column_map, zend_phalcon_globals, phalcon_globals)
 	STD_PHP_INI_BOOLEAN("phalcon.orm.cast_last_insert_id_to_int", "0", PHP_INI_ALL, OnUpdateBool, orm.cast_last_insert_id_to_int, zend_phalcon_globals, phalcon_globals)
 	STD_PHP_INI_BOOLEAN("phalcon.orm.cast_on_hydrate", "0", PHP_INI_ALL, OnUpdateBool, orm.cast_on_hydrate, zend_phalcon_globals, phalcon_globals)
@@ -39492,9 +39877,9 @@ PHP_INI_BEGIN()
 	STD_PHP_INI_BOOLEAN("phalcon.orm.ignore_unknown_columns", "0", PHP_INI_ALL, OnUpdateBool, orm.ignore_unknown_columns, zend_phalcon_globals, phalcon_globals)
 	STD_PHP_INI_BOOLEAN("phalcon.orm.late_state_binding", "0", PHP_INI_ALL, OnUpdateBool, orm.late_state_binding, zend_phalcon_globals, phalcon_globals)
 	STD_PHP_INI_BOOLEAN("phalcon.orm.not_null_validations", "1", PHP_INI_ALL, OnUpdateBool, orm.not_null_validations, zend_phalcon_globals, phalcon_globals)
-
+	
 	STD_PHP_INI_ENTRY("phalcon.orm.resultset_prefetch_records", "0", PHP_INI_ALL, NULL, orm.resultset_prefetch_records, zend_phalcon_globals, phalcon_globals)
-
+	
 	STD_PHP_INI_BOOLEAN("phalcon.orm.update_snapshot_on_save", "1", PHP_INI_ALL, OnUpdateBool, orm.update_snapshot_on_save, zend_phalcon_globals, phalcon_globals)
 	STD_PHP_INI_BOOLEAN("phalcon.orm.virtual_foreign_keys", "1", PHP_INI_ALL, OnUpdateBool, orm.virtual_foreign_keys, zend_phalcon_globals, phalcon_globals)
 	STD_PHP_INI_BOOLEAN("phalcon.warning.enable", "1", PHP_INI_ALL, OnUpdateBool, warning.enable, zend_phalcon_globals, phalcon_globals)
@@ -39509,14 +39894,14 @@ static PHP_MINIT_FUNCTION(phalcon)
 	ZEPHIR_INIT(Phalcon_Mvc_Model_Exception);
 	ZEPHIR_INIT(Phalcon_Mvc_View_Engine_Volt_Exception);
 	ZEPHIR_INIT(Phalcon_Parsers_Parser);
-
+	
 	return SUCCESS;
 }
 
 #ifndef ZEPHIR_RELEASE
 static PHP_MSHUTDOWN_FUNCTION(phalcon)
 {
-
+	
 	zephir_deinitialize_memory();
 	UNREGISTER_INI_ENTRIES();
 	return SUCCESS;
@@ -39536,7 +39921,7 @@ static void php_zephir_init_globals(zend_phalcon_globals *phalcon_globals)
 	/* Static cache */
 	memset(phalcon_globals->scache, '\0', sizeof(zephir_fcall_cache_entry*) * ZEPHIR_MAX_CACHE_SLOTS);
 
-
+	
 
 	phalcon_globals->orm.ast_cache = NULL;
 	phalcon_globals->orm.cache_level = 3;
@@ -39559,12 +39944,12 @@ static void php_zephir_init_globals(zend_phalcon_globals *phalcon_globals)
 
 
 
-
+	
 }
 
 static void php_zephir_init_module_globals(zend_phalcon_globals *phalcon_globals)
 {
-
+	
 }
 
 static PHP_RINIT_FUNCTION(phalcon)
@@ -39575,7 +39960,7 @@ static PHP_RINIT_FUNCTION(phalcon)
 	php_zephir_init_globals(phalcon_globals_ptr);
 	zephir_initialize_memory(phalcon_globals_ptr);
 
-
+	
 	return SUCCESS;
 }
 
@@ -39601,7 +39986,7 @@ static PHP_MINFO_FUNCTION(phalcon)
 	php_info_print_table_row(2, "Build Date", __DATE__ " " __TIME__ );
 	php_info_print_table_row(2, "Powered by Zephir", "Version " PHP_PHALCON_ZEPVERSION);
 	php_info_print_table_end();
-
+	
 	DISPLAY_INI_ENTRIES();
 }
 
@@ -39617,7 +40002,7 @@ static PHP_GINIT_FUNCTION(phalcon)
 
 static PHP_GSHUTDOWN_FUNCTION(phalcon)
 {
-
+	
 }
 
 
@@ -39669,3 +40054,5 @@ ZEND_TSRMLS_CACHE_DEFINE()
 # endif
 ZEND_GET_MODULE(phalcon)
 #endif
+
+
