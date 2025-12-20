@@ -12,11 +12,13 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
+#include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/memory.h"
 #include "kernel/object.h"
 #include "phalcon/mvc/model/orm.h"
-#include "kernel/fcall.h"
+#include "phalcon/annotations/scanner.h"
+#include "phalcon/annotations/annot.h"
 #include "phalcon/mvc/url/utils.h"
 #include "phalcon/mvc/model/query/scanner.h"
 #include "phalcon/mvc/model/query/phql.h"
@@ -40,6 +42,33 @@ ZEPHIR_INIT_CLASS(Phalcon_Parsers_Parser)
 	ZEPHIR_REGISTER_CLASS(Phalcon\\Parsers, Parser, phalcon, parsers_parser, phalcon_parsers_parser_method_entry, 0);
 
 	return SUCCESS;
+}
+
+/**
+ * Parse annotations
+ */
+PHP_METHOD(Phalcon_Parsers_Parser, annotationsParse)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *docBlock_param = NULL, *file, file_sub, *line, line_sub;
+	zval docBlock;
+
+	ZVAL_UNDEF(&docBlock);
+	ZVAL_UNDEF(&file_sub);
+	ZVAL_UNDEF(&line_sub);
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_STR(docBlock)
+		Z_PARAM_ZVAL(file)
+		Z_PARAM_ZVAL(line)
+	ZEND_PARSE_PARAMETERS_END();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 3, 0, &docBlock_param, &file, &line);
+	zephir_get_strval(&docBlock, docBlock_param);
+	ZEPHIR_LAST_CALL_STATUS = phannot_parse_annotations(return_value, &docBlock, file, line);
+	zephir_check_call_status();
+	RETURN_MM();
 }
 
 /**
@@ -101,6 +130,27 @@ PHP_METHOD(Phalcon_Parsers_Parser, ormParse)
 	zephir_get_strval(&phql, phql_param);
 	ZEPHIR_LAST_CALL_STATUS = phql_parse_phql(return_value, &phql);
 	zephir_check_call_status();
+	RETURN_MM();
+}
+
+/**
+ * Quote a string
+ */
+PHP_METHOD(Phalcon_Parsers_Parser, ormSingleQuotes)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *input_param = NULL;
+	zval input;
+
+	ZVAL_UNDEF(&input);
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_STR(input)
+	ZEND_PARSE_PARAMETERS_END();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &input_param);
+	zephir_get_strval(&input, input_param);
+	phalcon_orm_singlequotes(return_value, &input);
 	RETURN_MM();
 }
 

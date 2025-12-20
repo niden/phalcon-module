@@ -16,6 +16,14 @@ namespace Phalcon\Parsers;
 class Parser
 {
     /**
+     * Parse annotations
+     */
+    public static function annotationsParse(string docBlock, file, line) -> array
+    {
+        return phannot_parse_annotations(docBlock, file, line);
+    }
+
+    /**
      * Get the URI
      */
     public static function getUri(string path) -> string
@@ -45,6 +53,14 @@ class Parser
     public static function ormParse(string phql) -> array
     {
         return phql_parse_phql(phql);
+    }
+
+    /**
+     * Quote a string
+     */
+    public static function ormSingleQuotes(string input) -> array
+    {
+        return phalcon_orm_singlequotes(input);
     }
 
     /**
