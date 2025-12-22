@@ -2,7 +2,10 @@ services:
   phalcon-module-8.1:
     container_name: phalcon-module-8.1
     hostname: phalcon-module-81
-    build: docker/8.1
+    build:
+      dockerfile: docker/Dockerfile
+      args:
+        PHP_VERSION: 8.1
     working_dir: /srv
     volumes:
       - .:/srv
@@ -10,7 +13,10 @@ services:
   phalcon-module-8.2:
     container_name: phalcon-module-8.2
     hostname: phalcon-module-82
-    build: docker/8.2
+    build:
+      dockerfile: docker/Dockerfile
+      args:
+        PHP_VERSION: 8.2
     working_dir: /srv
     volumes:
       - .:/srv
@@ -18,7 +24,10 @@ services:
   phalcon-module-8.3:
     container_name: phalcon-module-8.3
     hostname: phalcon-module-83
-    build: docker/8.3
+    build:
+      dockerfile: docker/Dockerfile
+      args:
+        PHP_VERSION: 8.3
     working_dir: /srv
     volumes:
       - .:/srv
@@ -26,7 +35,10 @@ services:
   phalcon-module-8.4:
     container_name: phalcon-module-8.4
     hostname: phalcon-module-84
-    build: docker/8.4
+    build:
+      dockerfile: docker/Dockerfile
+      args:
+        PHP_VERSION: 8.4
     working_dir: /srv
     volumes:
       - .:/srv
@@ -34,7 +46,10 @@ services:
   phalcon-module-8.5:
     container_name: phalcon-module-8.5
     hostname: phalcon-module-85
-    build: docker/8.5
+    build:
+      dockerfile: docker/Dockerfile
+      args:
+        PHP_VERSION: 8.5
     working_dir: /srv
     volumes:
       - .:/srv
